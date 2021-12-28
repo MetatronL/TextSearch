@@ -195,8 +195,6 @@ class Trie
             return 0;
         }
 
-        // console.log(lastNode);
-
         return lastNode.getFinalCounter();
     }
 

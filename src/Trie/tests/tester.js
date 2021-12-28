@@ -1,4 +1,4 @@
-const Trie = require("./trie.js");
+const Trie = require("../Trie.js");
 
 function tester(arrInputLines)
 {

@@ -26,7 +26,7 @@ class RabinFingerprint
         return ((nCurrentHash + this.primeModule - previousSymbolHash) * this.base + nextSymbolHash)  % this.primeModule;
     }
 
-    basePower(nPower)
+    generateBigBase(nPower)
     {
         let result = 1;
 
@@ -39,62 +39,115 @@ class RabinFingerprint
     }
 }
 
+class RabinFingerprintCollection
+{
+    constructor(arrPrimeModules, base)
+    {
+        this.arrPrimeModules = arrPrimeModules;
+        this.base = base;
+
+        this.arrRabinFingerPrints = [];
+
+        for (const primeModule of arrPrimeModules)
+        {
+            const _rabinFingerprint = new RabinFingerprint(primeModule, base);
+            this.arrRabinFingerPrints.push(_rabinFingerprint);
+        }
+    }
+
+    generateBigBaseCollection(nPower)
+    {
+        return this.arrRabinFingerPrints.map(
+            (_rabinFingerprint) => _rabinFingerprint.generateBigBase(nPower),
+        );
+    }
+
+    generateHashCollection(strText)
+    {
+        return this.arrRabinFingerPrints.map(
+            (_rabinFingerprint) => _rabinFingerprint.generateHash(strText),
+        );
+    }
+
+    nextHashCollection(arrCurrentHash, previousSymbol, nextSymbol, arrBigBases)
+    {
+        return this.arrRabinFingerPrints.map(
+            (_rabinFingerprint, index) => _rabinFingerprint.nextHash(arrCurrentHash[index], previousSymbol, nextSymbol, arrBigBases[index]),
+        );
+    }
+
+    matchHashCollections(arrHashCollection1, arrHashCollection2)
+    {
+        if (arrHashCollection1.length !== arrHashCollection2.length)
+        {
+            throw new Error("[Internal] Different collection lengths...");
+        }
+
+        const _length = arrHashCollection1.length;
+
+        for (let index = 0; index < _length; ++index)
+        {
+            if (arrHashCollection1[index] !== arrHashCollection2[index])
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
 
 class RabinKarp
 {
     constructor({
-        primeModule1 = 100007,
-        primeModule2 = 100021,
+        primeModule = [100007, 100021],
         base = 71,
     } = {})
     {
-        this.primeModule1 = primeModule1;
-        this.primeModule2 = primeModule2;
+        this.primeModule = primeModule;
         this.base = base;
+
+        if (!Array.isArray(primeModule))
+        {
+            this.primeModule = [primeModule];
+        }
     }
 
 
     searchPattern(strPattern, strText)
     {
-        const fingerprint1 = new RabinFingerprint(this.primeModule1, this.base);
-        const fingerprint2 = new RabinFingerprint(this.primeModule2, this.base);
-
-        const patternHash1 = fingerprint1.generateHash(strPattern);
-        const patternHash2 = fingerprint2.generateHash(strPattern);
+        const rabinFingerprintCollection = new RabinFingerprintCollection(this.primeModule, this.base);
 
         const nPatternLength = strPattern.length;
         const nTextLength = strText.length;
-
 
         if (nTextLength < nPatternLength)
         {
             return [];
         }
 
+        const arrPatternHashCollection = rabinFingerprintCollection.generateHashCollection(strPattern);
         const firstSubstring = strText.substr(0, nPatternLength); 
-
-        let textHash1 = fingerprint1.generateHash(firstSubstring);
-        let textHash2 = fingerprint2.generateHash(firstSubstring);
+        let arrTextHashCollection = rabinFingerprintCollection.generateHashCollection(firstSubstring);
 
         const matches = [];
 
-        if (textHash1 === patternHash1 && textHash2 === patternHash2)
+        if (rabinFingerprintCollection.matchHashCollections(arrPatternHashCollection, arrTextHashCollection))
         {
             matches.push(0);
         }
 
-        const bigBase1 = fingerprint1.basePower(nPatternLength);
-        const bigBase2 = fingerprint2.basePower(nPatternLength);
+        const bigBaseCollection = rabinFingerprintCollection.generateBigBaseCollection(nPatternLength);
 
         for (let index = nPatternLength; index < nTextLength; ++index)
         {
             const previousSymbol = strText[index - nPatternLength];
             const nextSymbol = strText[index];
 
-            textHash1 = fingerprint1.nextHash(textHash1, previousSymbol, nextSymbol, bigBase1);
-            textHash2 = fingerprint2.nextHash(textHash2, previousSymbol, nextSymbol, bigBase2);
+            arrTextHashCollection = rabinFingerprintCollection.nextHashCollection(arrTextHashCollection, previousSymbol, nextSymbol, bigBaseCollection);
 
-            if (textHash1 === patternHash1 && textHash2 === patternHash2)
+            if (rabinFingerprintCollection.matchHashCollections(arrPatternHashCollection, arrTextHashCollection))
             {
                 matches.push(index - nPatternLength + 1);
             }

@@ -101,23 +101,23 @@ class RabinFingerprintCollection
 class RabinKarp
 {
     constructor({
-        primeModule = [100007, 100021],
+        primeModules = [100007, 100021],
         base = 71,
     } = {})
     {
-        this.primeModule = primeModule;
+        this.primeModules = primeModules;
         this.base = base;
 
-        if (!Array.isArray(primeModule))
+        if (!Array.isArray(primeModules))
         {
-            this.primeModule = [primeModule];
+            this.primeModules = [primeModules];
         }
     }
 
 
     searchPattern(strPattern, strText)
     {
-        const rabinFingerprintCollection = new RabinFingerprintCollection(this.primeModule, this.base);
+        const rabinFingerprintCollection = new RabinFingerprintCollection(this.primeModules, this.base);
 
         const nPatternLength = strPattern.length;
         const nTextLength = strText.length;

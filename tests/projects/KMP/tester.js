@@ -1,6 +1,7 @@
-const KMP = require("../KMP.js");
+const indexKMP = require("../../../src/KMP");
+const KMP = indexKMP.default;
 
-function tester(arrInputLines, parsedModelContent)
+function testKMP(arrInputLines)
 {
     const strPattern = arrInputLines[0];
     const strText = arrInputLines[1];
@@ -23,4 +24,7 @@ function tester(arrInputLines, parsedModelContent)
 }
 
 
-module.exports = tester;
+module.exports = {
+    test: testKMP,
+    project: indexKMP,
+};

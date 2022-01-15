@@ -1,6 +1,7 @@
-const Trie = require("../Trie.js");
+const indexTrie = require("../../../src/Trie");
+const Trie = indexTrie.default;
 
-function tester(arrInputLines)
+function testTrie(arrInputLines)
 {
     const _trie = new Trie();
     const arrReponse = [];
@@ -37,5 +38,7 @@ function tester(arrInputLines)
     return arrReponse;
 }
 
-
-module.exports = tester;
+module.exports = {
+    test: testTrie,
+    project: indexTrie,
+};

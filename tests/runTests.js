@@ -7,12 +7,14 @@ const FileReader = require("../_utils/FileReader.js");
 // const configurationTrie = require("../src/Trie");
 const testerKMP = require("./projects/KMP");
 const testerTrie = require("./projects/Trie");
+const testerRabinKarp = require("./projects/RabinKarp");
 
 
 const arrProblemsMetadata = [
     // configurationTrie,
     testerKMP,
     testerTrie,
+    testerRabinKarp,
 ];
 
 function runTests({

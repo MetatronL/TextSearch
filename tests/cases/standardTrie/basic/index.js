@@ -1,6 +1,6 @@
-import { createTestGroupMetadata } from "../../../_utils/Metadata.js";
+import { CreateTestGroupMetadata } from "../../../_utils/Metadata.js";
 
-export default new createTestGroupMetadata({
+export default new CreateTestGroupMetadata({
 	prefix: "grader_test",
 	indexStart: 1,
 	indexEnd: 20,

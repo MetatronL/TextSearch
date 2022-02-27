@@ -1,4 +1,4 @@
-export default {
+module.exports = {
 	env: {
 		browser: true,
 		node: true,
@@ -62,5 +62,6 @@ export default {
 		camelcase: "off",
 		"no-continue": "off",
 		"import/no-unresolved": [2, { amd: true }],
+		"import/extensions": "off",
 	},
 };

@@ -1,32 +1,33 @@
-const indexRabinKarp = require("../../../src/RabinKarp");
+import indexRabinKarp from "../../../src/RabinKarp/index.js";
+
 const RabinKarp = indexRabinKarp.default;
 
 function testRabinKarp(arrInputLines)
 {
-    const strPattern = arrInputLines[0];
-    const strText = arrInputLines[1];
+	const strPattern = arrInputLines[0];
+	const strText = arrInputLines[1];
 
-    const instanceRabinKarp = new RabinKarp();
+	const instanceRabinKarp = new RabinKarp();
 
-    const arrPositions =  instanceRabinKarp.searchPattern(strPattern, strText);
+	const arrPositions = instanceRabinKarp.searchPattern(strPattern, strText);
 
-    let response = arrPositions;
+	let response = arrPositions;
 
-    if (arrPositions.length > 1000)
-    {
-        response = response.slice(0, 1000);
-    }
+	if (arrPositions.length > 1000)
+	{
+		response = response.slice(0, 1000);
+	}
 
-    if (response.length)
-    {
-        return [[arrPositions.length], response];
-    }
+	if (response.length)
+	{
+		return [[arrPositions.length], response];
+	}
 
-    return [[0]];
+	return [[0]];
 }
 
 
-module.exports = {
-    test: testRabinKarp,
-    project: indexRabinKarp,
+export default {
+	test: testRabinKarp,
+	project: indexRabinKarp,
 };

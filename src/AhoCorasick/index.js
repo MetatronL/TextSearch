@@ -1,9 +1,7 @@
+import AhoCorasick from "./AhoCorasick.js";
 
-const AhoCorasick = require("./AhoCorasick.js");
-
-module.exports = {
-    name: "AhoCorasick",
-    path: __dirname,
-    AhoCorasick,
-    default: AhoCorasick,
+export default {
+	name: "AhoCorasick",
+	AhoCorasick,
+	default: AhoCorasick,
 };

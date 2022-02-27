@@ -1,9 +1,7 @@
+import RabinKarp from "./RabinKarp.js";
 
-const RabinKarp = require("./RabinKarp.js");
-
-module.exports = {
-    name: "RabinKarp",
-    path: __dirname,
-    RabinKarp,
-    default: RabinKarp,
+export default {
+	name: "RabinKarp",
+	RabinKarp,
+	default: RabinKarp,
 };

@@ -1,9 +1,7 @@
+import Trie from "./Trie.js";
 
-const Trie = require("./Trie.js");
-
-module.exports = {
-    name: "Trie",
-    path: __dirname,
-    Trie,
-    default: Trie,
+export default {
+	name: "Trie",
+	Trie,
+	default: Trie,
 };

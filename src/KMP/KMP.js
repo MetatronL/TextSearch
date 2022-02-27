@@ -70,7 +70,7 @@ function kmpSearch(strPattern, strText)
     return arrPositions;
 }
 
-module.exports = {
+export default {
     kmpSearch,
     computeLongestProperPrefixSuffixArray,
 };

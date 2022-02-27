@@ -1,24 +1,25 @@
-const indexAhoCorasick = require("../../../src/AhoCorasick");
+import indexAhoCorasick from "../../../src/AhoCorasick/index.js";
+
 const AhoCorasick = indexAhoCorasick.default;
 
 function testAhoCorasick({
-    text,
-    dictionary,
+	text,
+	dictionary,
 })
 {
-    const ahoCorasickTree = new AhoCorasick();
+	const ahoCorasickTree = new AhoCorasick();
 
-    for (const strWord of dictionary)
-    {
-        ahoCorasickTree.addWord(strWord);
-    }
+	for (const strWord of dictionary)
+	{
+		ahoCorasickTree.addWord(strWord);
+	}
 
-    ahoCorasickTree.prepareAutomaton();
+	ahoCorasickTree.prepareAutomaton();
 
-    return ahoCorasickTree.matchText(text);
+	return ahoCorasickTree.matchText(text);
 }
 
-module.exports = {
-    test: testAhoCorasick,
-    project: indexAhoCorasick,
+export default {
+	test: testAhoCorasick,
+	project: indexAhoCorasick,
 };

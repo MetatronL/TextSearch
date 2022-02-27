@@ -1,9 +1,7 @@
+import KMP from "./KMP.js";
 
-const KMP = require("./KMP.js");
-
-module.exports = {
-    name: "KMP",
-    path: __dirname,
-    KMP,
-    default: KMP,
+export default {
+	name: "KMP",
+	KMP,
+	default: KMP,
 };

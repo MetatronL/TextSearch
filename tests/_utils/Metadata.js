@@ -1,4 +1,4 @@
-function createTestGroupMetadata({
+export function createTestGroupMetadata({
     prefix ="test",
     indexStart = null,
     indexEnd = null,
@@ -13,7 +13,3 @@ function createTestGroupMetadata({
     this.outputExtension = outputExtension;
     this.prefix = prefix;
 }
-
-module.exports = {
-    createTestGroupMetadata,
-};

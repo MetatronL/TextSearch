@@ -1,9 +1,9 @@
-const tester = require("./tester");
-const ahoCorasick = require("../../cases/ahoCorasick");
+import tester from "./tester.js";
+import ahoCorasick from "../../cases/ahoCorasick/index.js";
 
-module.exports = {
-    tester,
-    testCases: [
-        ahoCorasick,
-    ],
+export default {
+	tester,
+	testCases: [
+		ahoCorasick,
+	],
 };

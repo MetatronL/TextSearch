@@ -160,4 +160,4 @@ class RabinKarp
 RabinKarp.RabinFingerprint = RabinFingerprint;
 
 
-module.exports = RabinKarp;
+export default RabinKarp;

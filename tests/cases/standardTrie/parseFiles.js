@@ -1,5 +1,5 @@
 
-function parseInputFile(mxFileContent)
+export function parseInputFile(mxFileContent)
 {
     const arrLines = mxFileContent.split("\n");
     const arrLinesValid =arrLines.filter((strLine) => strLine.length);
@@ -7,7 +7,7 @@ function parseInputFile(mxFileContent)
     return arrLinesValid.map((strLine) => strLine.split(" "));
 }
 
-function parseModelFile(mxFileContent)
+export function parseModelFile(mxFileContent)
 {
     const arrLines = mxFileContent.split("\n");
     const arrLinesValid = arrLines
@@ -16,8 +16,3 @@ function parseModelFile(mxFileContent)
 
     return arrLinesValid;
 }
-
-module.exports = {
-    parseInputFile,
-    parseModelFile,
-};

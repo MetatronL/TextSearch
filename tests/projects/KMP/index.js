@@ -1,9 +1,9 @@
-const tester = require("./tester");
-const textPatterns = require("../../cases/textPatterns");
+import tester from "./tester.js";
+import textPatterns from "../../cases/textPatterns/index.js";
 
-module.exports = {
-    tester,
-    testCases: [
-        textPatterns,
-    ],
+export default {
+	tester,
+	testCases: [
+		textPatterns,
+	],
 };

@@ -1,9 +1,9 @@
-const tester = require("./tester");
-const standardTrie = require("../../cases/standardTrie");
+import tester from "./tester.js";
+import standardTrie from "../../cases/standardTrie/index.js";
 
-module.exports = {
-    tester,
-    testCases: [
-        standardTrie,
-    ],
+export default {
+	tester,
+	testCases: [
+		standardTrie,
+	],
 };

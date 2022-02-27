@@ -1,0 +1,66 @@
+export default {
+	env: {
+		browser: true,
+		node: true,
+		es2021: true,
+	},
+	extends: [
+		"eslint:recommended",
+		"airbnb-base",
+		"plugin:import/errors",
+		"plugin:import/warnings",
+	],
+	plugins: [
+		"import",
+	],
+	parserOptions: {
+		ecmaVersion: 2021,
+		sourceType: "module",
+	},
+	settings: {
+		"import/resolver": {
+			// alias: {
+			// 	extensions: [".ts", ".js", ".jsx", ".json"],
+			// },
+			node: {
+				moduleDirectory: ["src/", "tests/", "node_modules/"],
+			},
+		},
+	},
+	rules: {
+		"import/prefer-default-export": "off",
+		"jsdoc/require-jsdoc": "off",
+		"jsdoc/require-returns-description": "off",
+		"max-len": ["warn", { code: 210 }],
+		"no-nested-ternary": "off",
+		"no-tabs": "off",
+		"no-underscore-dangle": "off",
+		"brace-style": "off",
+		quotes: ["error", "double"],
+		"no-console": "off",
+		"arrow-body-style": "off",
+		"padded-blocks": "warn",
+		"prefer-destructuring": ["warn", { object: true, array: false }],
+		"dot-notation": "off",
+		"comma-dangle": "warn",
+		indent: ["warn", "tab", { SwitchCase: 1 }],
+		"object-curly-newline": ["error", {
+			ObjectExpression: { minProperties: 6, consistent: true },
+			ObjectPattern: { minProperties: 6, multiline: true, consistent: true },
+			ImportDeclaration: { multiline: true, minProperties: 5, consistent: true },
+			ExportDeclaration: { multiline: true, minProperties: 5, consistent: true },
+		}],
+		"no-param-reassign": "warn",
+		"jsdoc/check-alignment": "off",
+		"no-restricted-syntax": "off",
+		"jsdoc/require-returns": "off",
+		"jsdoc/check-types": "off",
+		radix: ["error", "as-needed"],
+		"no-multiple-empty-lines": ["error", { max: 2, maxEOF: 1 }],
+		"jsx-a11y/alt-text": "off",
+		"import/named": "warn",
+		camelcase: "off",
+		"no-continue": "off",
+		"import/no-unresolved": [2, { amd: true }],
+	},
+};

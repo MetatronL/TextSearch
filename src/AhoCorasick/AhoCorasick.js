@@ -173,4 +173,4 @@ class AhoCorasick
     }
 }
 
-module.exports = AhoCorasick;
+export default AhoCorasick;

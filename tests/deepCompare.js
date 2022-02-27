@@ -75,4 +75,4 @@ function deepCompare(leftElement, rightElement)
     return leftElement === rightElement;
 }
 
-module.exports = deepCompare;
+export default deepCompare;

@@ -1,209 +1,91 @@
-class TrieNode
+import TrieNode from "./TrieNode.js";
+
+export default class Trie
 {
-    constructor(symbol, previous = null, finalCounter = 0)
-    {
-        this.symbol = symbol;
-        this.innerCounter = 1;
-        this.finalCounter = finalCounter;
-        this.next = [];
-        this.previous = previous;
-    }
+	constructor()
+	{
+		this.root = new TrieNode(null);
+	}
 
-    getSymbol()
-    {
-        return this.symbol;
-    }
+	addWord(strWord)
+	{
+		let _currentNode = this.root;
 
-    goToPreviousNode()
-    {
-        return this.previous;
-    };
+		for (const symbol of strWord)
+		{
+			_currentNode = _currentNode.addNextSymbol(symbol);
+		}
 
-    increaseInnerCounter()
-    {
-        this.innerCounter = this.innerCounter + 1;
-    }
+		_currentNode.increaseFinalCounter();
 
-    decreaseInnerCounter()
-    {
-        this.innerCounter = this.innerCounter - 1;
+		return null;
+	}
 
-        if (this.innerCounter < 0)
-        {
-            this.innerCounter = 0;
-        }
-    }
+	_goToLastNode(strWord)
+	{
+		let pathLength = 0;
+		let completeWord = true;
 
-    increaseFinalCounter()
-    {
-        this.finalCounter = this.finalCounter + 1;
-    }
+		let _currentNode = this.root;
 
-    decreaseFinalCounter()
-    {
-        this.finalCounter = this.finalCounter - 1;
+		for (const symbol of strWord)
+		{
+			if (_currentNode.hasNextSymbol(symbol))
+			{
+				pathLength += 1;
+				_currentNode = _currentNode.goToNextSymbol(symbol);
+			}
+			else
+			{
+				completeWord = false;
+				break;
+			}
+		}
 
-        if (this.finalCounter < 0)
-        {
-            this.finalCounter = 0;
-        }
-    }
+		return [_currentNode, pathLength, completeWord];
+	}
 
-    removeNextNode(symbol)
-    {
-        if (this.hasNextSymbol(symbol))
-        {
-            delete this.next[symbol];
-            this.next[symbol] = undefined;
-            delete this.next[symbol];
-        }
-    }
+	deleteWord(strWord)
+	{
+		const [lastNode, pathLength, completeWord] = this._goToLastNode(strWord);
 
-    getInnerCounter()
-    {
-        return this.innerCounter;
-    }
+		if (!completeWord)
+		{
+			throw new Error("Trie: The word requested to be 'deleted' is not present in the structure.");
+		}
 
-    getFinalCounter()
-    {
-        return this.finalCounter;
-    }
+		lastNode.decreaseFinalCounter();
 
-    removeOneEntryOf(symbol)
-    {
-        if (this.hasNextSymbol(symbol))
-        {
-            const nextNode = this.goToNextSymbol(symbol);
-            nextNode.decreaseInnerCounter(symbol);
+		let _currentNode = lastNode.goToPreviousNode();
+		let previousSymbol = lastNode.getSymbol();
 
-            if (nextNode.getInnerCounter() < 1)
-            {
-                this.removeNextNode(symbol)
-            }
+		while (_currentNode !== null)
+		{
+			_currentNode.removeOneEntryOf(previousSymbol);
+			previousSymbol = _currentNode.getSymbol();
+			_currentNode = _currentNode.goToPreviousNode();
+		}
 
-            return;
-        }
+		return null;
+	}
 
-        throw new Error("TrieNode: The requested symbol to be decreased not found.")
-    }
+	countWord(strWord)
+	{
+		const [lastNode, pathLength, completeWord] = this._goToLastNode(strWord);
 
-    addNextSymbol(symbol)
-    {
-        if (!(this.next[symbol] instanceof TrieNode))
-        {
-            this.next[symbol] = new TrieNode(symbol, this);
-        }
-        else
-        {
-            this.next[symbol].increaseInnerCounter();
-        }
+		if (!completeWord)
+		{
+			return 0;
+		}
 
-        return this.next[symbol];
-    }
+		return lastNode.getFinalCounter();
+	}
 
-    goToNextSymbol(symbol)
-    {
-        if (this.next[symbol] instanceof TrieNode)
-        {
-            return this.next[symbol];
-        }
-        
-        return null;
-    }
+	maxCommonLength(strWord)
+	{
+		const [lastNode, pathLength] = this._goToLastNode(strWord);
 
-    hasNextSymbol(symbol)
-    {
-        return this.next[symbol] instanceof TrieNode;
-    }
+		return pathLength;
+	}
 }
 
-class Trie
-{
-    constructor()
-    {
-        this.root = new TrieNode(null);
-    }
-
-    addWord(strWord)
-    {
-        let _currentNode = this.root;
-
-        for (const symbol of strWord)
-        {
-            _currentNode = _currentNode.addNextSymbol(symbol);
-        }
-
-        _currentNode.increaseFinalCounter();
-
-        return null;
-    }
-
-    _goToLastNode(strWord)
-    {
-        let pathLength = 0;
-        let completeWord = true;
-
-        let _currentNode = this.root;
-
-        for (const symbol of strWord)
-        {
-            if (_currentNode.hasNextSymbol(symbol))
-            {
-                ++pathLength;
-                _currentNode = _currentNode.goToNextSymbol(symbol);
-            }
-            else
-            {
-                completeWord = false;
-                break;
-            }
-        }
-
-        return [_currentNode, pathLength, completeWord];
-    }
-
-    deleteWord(strWord)
-    {
-        const [lastNode, pathLength, completeWord] = this._goToLastNode(strWord);
-
-        if (!completeWord)
-        {
-            throw new Error("Trie: The word requested to be 'deleted' is not present in the structure.")
-        }
-
-        lastNode.decreaseFinalCounter();
-
-        let _currentNode = lastNode.goToPreviousNode();
-        let previousSymbol = lastNode.getSymbol();
-
-        while (_currentNode !== null)
-        {
-            _currentNode.removeOneEntryOf(previousSymbol);
-            previousSymbol = _currentNode.getSymbol();
-            _currentNode = _currentNode.goToPreviousNode();
-        }
-
-        return null;
-    }
-
-    countWord(strWord)
-    {
-        const [lastNode, pathLength, completeWord] = this._goToLastNode(strWord);
-
-        if (!completeWord)
-        {
-            return 0;
-        }
-
-        return lastNode.getFinalCounter();
-    }
-
-    maxCommonLength(strWord)
-    {
-        const [lastNode, pathLength] = this._goToLastNode(strWord);
-
-        return pathLength;
-    }
-}
-
-module.exports = Trie;

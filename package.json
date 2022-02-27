@@ -1,0 +1,32 @@
+{
+  "name": "textsearch",
+  "version": "1.0.0",
+  "description": "- Create Longest Proper Prefix Suffix sub-project\r     - use it in KMP",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "eslint-plugin-import": "^2.25.4",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-node": "^0.3.6"
+  },
+  "scripts": {
+    "test": "node ./tests/runTests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MetatronL/TextSearch.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MetatronL/TextSearch/issues"
+  },
+  "homepage": "https://github.com/MetatronL/TextSearch#readme",
+  "type": "module"
+}
